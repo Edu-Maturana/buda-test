@@ -11,9 +11,9 @@ class SpreadService implements SpreadServiceInterface {
 
   async calculateSpread(market: string): Promise<Spread> {
     const orders = await this.marketApi.getMarketOrders(market);
-    const bestBid = orders.bids[0][0];
-    const bestAsk = orders.asks[0][0];
-    const spread = bestAsk - bestBid;
+    const highestBid = orders.bids[0][0];
+    const lowestAsk = orders.asks[0][0];
+    const spread = lowestAsk - highestBid;
 
     return new Spread(spread);
   }
