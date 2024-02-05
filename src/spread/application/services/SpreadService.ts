@@ -27,3 +27,5 @@ class SpreadService implements SpreadServiceInterface {
     return true;
   }
 }
+
+export default SpreadService;
