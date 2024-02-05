@@ -1,4 +1,4 @@
-import { Spread } from "../../domain/models/Spread";
+import Spread from "../../domain/models/Spread";
 
 interface SpreadServiceInterface {
   calculateSpread(market: string): Promise<Spread>;
