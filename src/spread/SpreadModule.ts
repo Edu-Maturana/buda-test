@@ -22,11 +22,11 @@ class SpreadModule {
     const router = express.Router();
 
     router.get(
-      "/spread/:market",
+      "/:market",
       this.spreadController.getSpread.bind(this.spreadController)
     );
     router.get(
-      "/spreads",
+      "/",
       this.spreadController.getAllSpreads.bind(this.spreadController)
     );
     router.post(
@@ -34,7 +34,7 @@ class SpreadModule {
       this.spreadController.setAlertSpread.bind(this.spreadController)
     );
     router.get(
-      "/poll-alert",
+      "/alert",
       this.spreadController.pollAlertSpread.bind(this.spreadController)
     );
 

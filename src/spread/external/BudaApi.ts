@@ -4,9 +4,10 @@ import MarketApiInterface from "./MarketApiInterface";
 class BudaApi implements MarketApiInterface {
   async getMarketOrders(market: string): Promise<any> {
     const response = await axios.get(
-      `http://api.buda.com/markets/${market}/order-book`
+      `https://www.buda.com/api/v2/markets/${market}/order_book`
     );
-    return response.data;
+
+    return response.data.order_book;
   }
 }
 
