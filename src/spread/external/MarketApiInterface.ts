@@ -1,5 +1,12 @@
-interface MarketApiInterface {
-  getMarketOrders(market: string): Promise<any>;
+export interface MarketApiInterface {
+  getMarketOrders(market: string): Promise<MarketOrderResponse>;
 }
 
-export default MarketApiInterface;
+export interface MarketOrderResponse {
+  order_book: {
+    asks: Order[];
+    bids: Order[];
+  };
+}
+
+type Order = [string, string];

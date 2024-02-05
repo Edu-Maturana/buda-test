@@ -1,4 +1,4 @@
-import MarketApiInterface from "../../external/MarketApiInterface";
+import { MarketApiInterface } from "../../external/MarketApiInterface";
 import Spread from "../../domain/models/Spread";
 import SpreadServiceInterface from "./SpreadServiceInterface";
 
@@ -11,9 +11,9 @@ class SpreadService implements SpreadServiceInterface {
 
   async calculateSpread(market: string): Promise<Spread> {
     const orders = await this.marketApi.getMarketOrders(market);
-    const highestBid = orders.bids[0][0];
-    const lowestAsk = orders.asks[0][0];
-    const spread = lowestAsk - highestBid;
+    const highestBid = orders.order_book.bids[0][0];
+    const lowestAsk = orders.order_book.asks[0][0];
+    const spread: number = parseFloat(lowestAsk) - parseFloat(highestBid);
 
     return new Spread(spread);
   }
