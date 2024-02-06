@@ -2,7 +2,7 @@ import express, { Router } from "express";
 import SpreadController from "./adapters/controllers/SpreadController";
 import SpreadService from "./application/services/SpreadService";
 import BudaApi from "./external/BudaApi";
-import AlertSpreadRepository from "./infraestructure/repositories/AlertSpreadRepository";
+import AlertSpreadRepository from "./adapters/repositories/AlertSpreadRepository";
 
 class SpreadModule {
   private readonly router: Router;

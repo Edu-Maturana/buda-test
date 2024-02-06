@@ -2,7 +2,7 @@ import { MarketProviderInterface } from "../../external/MarketProviderInterface"
 import { Market } from "../../domain/value-objects/SpreadValueObjects";
 import { Spread } from "../../domain/models/Spread";
 import SpreadServiceInterface from "./SpreadServiceInterface";
-import AlertSpreadRepositoryInterface from "../../infraestructure/repositories/AlertSpreadRepositoryInterface";
+import AlertSpreadRepositoryInterface from "../../adapters/repositories/AlertSpreadRepositoryInterface";
 import { PollingSpread } from "../../domain/models/PollingSpread";
 
 class SpreadService implements SpreadServiceInterface {
