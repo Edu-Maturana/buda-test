@@ -1,16 +1,16 @@
-import { MarketApiInterface } from "../../external/MarketApiInterface";
-import { Spread } from "../../domain/models/Spread";
+import { MarketProviderInterface } from "../../external/MarketProviderInterface";
+import { Market, Spread } from "../../domain/models/Spread";
 import SpreadServiceInterface from "./SpreadServiceInterface";
 
 class SpreadService implements SpreadServiceInterface {
   constructor(
-    private readonly marketApi: MarketApiInterface,
+    private readonly marketProvider: MarketProviderInterface,
     // TODO: Tipar
     private readonly alertSpreadRepository: any
   ) {}
 
-  async calculateSpread(market: string): Promise<Spread> {
-    const orders = await this.marketApi.getMarketOrders(market);
+  async calculateSpread(market: Market): Promise<Spread> {
+    const orders = await this.marketProvider.getMarketOrders(market);
 
     if (!orders.order_book.bids.length || !orders.order_book.asks.length) {
       return new Spread(0, market);
@@ -25,9 +25,9 @@ class SpreadService implements SpreadServiceInterface {
   }
 
   async getAllSpreads(): Promise<Spread[]> {
-    const allMarkets = await this.marketApi.getAllMarkets();
+    const allMarkets = await this.marketProvider.getAllMarkets();
     const spreads = await Promise.all(
-      allMarkets.map((market) => this.calculateSpread(market))
+      allMarkets.map((market: Market) => this.calculateSpread(market))
     );
 
     return spreads;

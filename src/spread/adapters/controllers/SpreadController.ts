@@ -1,12 +1,13 @@
 import { Request, Response } from "express";
 import SpreadService from "../../application/services/SpreadService";
 import SpreadControllerInterface from "./SpreadControllerInterface";
+import { Market } from "../../domain/models/Spread";
 
 class SpreadController implements SpreadControllerInterface {
   constructor(private readonly spreadService: SpreadService) {}
 
   async getSpread(req: Request, res: Response): Promise<void> {
-    const market = req.params.market as string;
+    const market = req.params.market as Market;
     const spread = await this.spreadService.calculateSpread(market);
     res.json(spread);
   }

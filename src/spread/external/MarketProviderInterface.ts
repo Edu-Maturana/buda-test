@@ -1,4 +1,4 @@
-export interface MarketApiInterface {
+export interface MarketProviderInterface {
   getMarketOrders(market: string): Promise<MarketOrderBookResponse>;
   getAllMarkets(): Promise<string[]>;
 }

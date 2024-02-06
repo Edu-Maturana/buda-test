@@ -1,15 +1,16 @@
 import axios from "axios";
 import {
-  MarketApiInterface,
+  MarketProviderInterface,
   MarketOrderBookResponse,
   MarketResponse,
-} from "./MarketApiInterface";
+} from "./MarketProviderInterface";
+import { Market } from "../domain/models/Spread";
 
-class BudaApi implements MarketApiInterface {
+class BudaApi implements MarketProviderInterface {
   apiURL: string = "https://www.buda.com/api/v2";
-  marketCache: string[] = [];
+  marketCache: Market[] = [];
 
-  async getMarketOrders(market: string): Promise<MarketOrderBookResponse> {
+  async getMarketOrders(market: Market): Promise<MarketOrderBookResponse> {
     const response = await axios.get(
       `${this.apiURL}/markets/${market}/order_book`
     );
@@ -17,7 +18,7 @@ class BudaApi implements MarketApiInterface {
     return response.data;
   }
 
-  async getAllMarkets(): Promise<string[]> {
+  async getAllMarkets(): Promise<Market[]> {
     if (this.marketCache.length) {
       return this.marketCache;
     }
