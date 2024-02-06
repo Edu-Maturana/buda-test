@@ -8,10 +8,13 @@ class SpreadController implements SpreadControllerInterface {
   async getSpread(req: Request, res: Response): Promise<void> {
     const market = req.params.market as string;
     const spread = await this.spreadService.calculateSpread(market);
-    res.json({ spread: spread.getValue() });
+    res.json(spread);
   }
 
-  async getAllSpreads(req: Request, res: Response): Promise<void> {}
+  async getAllSpreads(req: Request, res: Response): Promise<void> {
+    const spreads = await this.spreadService.getAllSpreads();
+    res.json(spreads);
+  }
 
   async setAlertSpread(req: Request, res: Response): Promise<void> {}
 

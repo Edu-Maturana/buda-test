@@ -14,7 +14,7 @@ class BudaApi implements MarketApiInterface {
   async getAllMarkets(): Promise<string[]> {
     const response = await axios.get(`${this.apiURL}/markets`);
 
-    return response.data.markets.map((market: any) => market.id);
+    return response.data.markets.map((market: any) => market.name);
   }
 }
 

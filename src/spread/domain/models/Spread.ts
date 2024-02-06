@@ -1,13 +1,12 @@
-class Spread {
-  private readonly value: number;
+export type SpreadValue = number;
+export type Market = string;
 
-  constructor(value: number) {
+export class Spread {
+  public readonly value: SpreadValue;
+  public readonly market: Market;
+
+  constructor(value: number, market: string) {
     this.value = value;
-  }
-
-  getValue(): number {
-    return this.value;
+    this.market = market;
   }
 }
-
-export default Spread;
