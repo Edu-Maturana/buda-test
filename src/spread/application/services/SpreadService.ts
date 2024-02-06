@@ -1,12 +1,13 @@
 import { MarketProviderInterface } from "../../external/MarketProviderInterface";
-import { Market, Spread } from "../../domain/models/Spread";
+import { Market } from "../../domain/value-objects/SpreadValueObjects";
+import { Spread } from "../../domain/models/Spread";
 import SpreadServiceInterface from "./SpreadServiceInterface";
+import AlertSpreadRepositoryInterface from "../../infraestructure/repositories/AlertSpreadRepositoryInterface";
 
 class SpreadService implements SpreadServiceInterface {
   constructor(
     private readonly marketProvider: MarketProviderInterface,
-    // TODO: Tipar
-    private readonly alertSpreadRepository: any
+    private readonly alertSpreadRepository: AlertSpreadRepositoryInterface
   ) {}
 
   async calculateSpread(market: Market): Promise<Spread> {
@@ -33,12 +34,24 @@ class SpreadService implements SpreadServiceInterface {
     return spreads;
   }
 
-  async setAlertSpread(alertSpread: number): Promise<void> {
-    return;
+  setAlertSpread(alertSpread: Spread): void {
+    this.alertSpreadRepository.setAlertSpread(alertSpread);
   }
 
   async pollAlertSpread(): Promise<boolean> {
-    return true;
+    const alertSpread = this.alertSpreadRepository.getAlertSpread();
+
+    if (!alertSpread) {
+      return false;
+    }
+
+    const currentSpread = await this.calculateSpread(alertSpread.market);
+
+    if (currentSpread.value > alertSpread.value) {
+      return true;
+    }
+
+    return false;
   }
 }
 

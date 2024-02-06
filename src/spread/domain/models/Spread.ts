@@ -1,5 +1,4 @@
-export type SpreadValue = number;
-export type Market = string;
+import { Market, SpreadValue } from "../value-objects/SpreadValueObjects";
 
 export class Spread {
   public readonly value: SpreadValue;

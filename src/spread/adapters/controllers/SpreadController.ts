@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import SpreadService from "../../application/services/SpreadService";
 import SpreadControllerInterface from "./SpreadControllerInterface";
-import { Market } from "../../domain/models/Spread";
+import { Market } from "../../domain/value-objects/SpreadValueObjects";
 
 class SpreadController implements SpreadControllerInterface {
   constructor(private readonly spreadService: SpreadService) {}
