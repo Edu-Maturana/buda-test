@@ -1,5 +1,6 @@
 export interface MarketApiInterface {
   getMarketOrders(market: string): Promise<MarketOrderResponse>;
+  getAllMarkets(): Promise<string[]>;
 }
 
 export interface MarketOrderResponse {

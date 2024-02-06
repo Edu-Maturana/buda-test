@@ -19,7 +19,13 @@ class SpreadService implements SpreadServiceInterface {
   }
 
   async getAllSpreads(): Promise<Spread[]> {
-    return [];
+    const allMarkets = await this.marketApi.getAllMarkets();
+    const spreadPromises = allMarkets.map((market) =>
+      this.calculateSpread(market)
+    );
+    const spreads = await Promise.all(spreadPromises);
+
+    return spreads;
   }
 
   async setAlertSpread(alertSpread: number): Promise<void> {
