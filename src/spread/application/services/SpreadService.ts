@@ -3,6 +3,7 @@ import { Market } from "../../domain/value-objects/SpreadValueObjects";
 import { Spread } from "../../domain/models/Spread";
 import SpreadServiceInterface from "./SpreadServiceInterface";
 import AlertSpreadRepositoryInterface from "../../infraestructure/repositories/AlertSpreadRepositoryInterface";
+import { PollingSpread } from "../../domain/models/PollingSpread";
 
 class SpreadService implements SpreadServiceInterface {
   constructor(
@@ -38,20 +39,21 @@ class SpreadService implements SpreadServiceInterface {
     this.alertSpreadRepository.setAlertSpread(alertSpread);
   }
 
-  async pollAlertSpread(): Promise<boolean> {
+  async pollAlertSpread(): Promise<PollingSpread | null> {
     const alertSpread = this.alertSpreadRepository.getAlertSpread();
 
     if (!alertSpread) {
-      return false;
+      return null;
     }
 
     const currentSpread = await this.calculateSpread(alertSpread.market);
+    const currentSpreadIsGreater = currentSpread.value > alertSpread.value;
 
-    if (currentSpread.value > alertSpread.value) {
-      return true;
-    }
-
-    return false;
+    return new PollingSpread(
+      currentSpread,
+      alertSpread,
+      currentSpreadIsGreater
+    );
   }
 }
 
