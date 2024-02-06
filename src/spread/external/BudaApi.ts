@@ -1,9 +1,15 @@
 import axios from "axios";
-import { MarketApiInterface, MarketOrderResponse } from "./MarketApiInterface";
+import {
+  MarketApiInterface,
+  MarketOrderBookResponse,
+  MarketResponse,
+} from "./MarketApiInterface";
 
 class BudaApi implements MarketApiInterface {
   apiURL: string = "https://www.buda.com/api/v2";
-  async getMarketOrders(market: string): Promise<MarketOrderResponse> {
+  marketCache: string[] = [];
+
+  async getMarketOrders(market: string): Promise<MarketOrderBookResponse> {
     const response = await axios.get(
       `${this.apiURL}/markets/${market}/order_book`
     );
@@ -12,9 +18,16 @@ class BudaApi implements MarketApiInterface {
   }
 
   async getAllMarkets(): Promise<string[]> {
-    const response = await axios.get(`${this.apiURL}/markets`);
+    if (this.marketCache.length) {
+      return this.marketCache;
+    }
 
-    return response.data.markets.map((market: any) => market.name);
+    const response = await axios.get(`${this.apiURL}/markets`);
+    this.marketCache = response.data.markets.map(
+      (market: MarketResponse) => market.name
+    );
+
+    return this.marketCache;
   }
 }
 
