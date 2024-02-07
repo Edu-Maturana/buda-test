@@ -19,32 +19,59 @@ describe("Spread service", () => {
       const spread = await spreadService.calculateSpread("btc-clp");
       expect(spread.value).toBe(2);
     });
+
+    it("should handle no bids or asks", async () => {
+      const spread = await spreadService.calculateSpread("btc-ars");
+      expect(spread.value).toBe(0);
+    });
+
+    it("should handle equal bids and asks", async () => {
+      const spread = await spreadService.calculateSpread("eth-clp");
+      expect(spread.value).toBe(0);
+    });
   });
 
   describe("getAllSpreads", () => {
-    it("should get all spreads", async () => {
-      const spreads = await spreadService.getAllSpreads();
-      expect(spreads).toHaveLength(2);
+    it("should call getAllMarkets method of marketProvider", async () => {
+      const getAllMarketsSpy = jest.spyOn(
+        spreadService.marketProvider,
+        "getAllMarkets"
+      );
+
+      await spreadService.getAllSpreads();
+
+      expect(getAllMarketsSpy).toHaveBeenCalledTimes(1);
+    });
+
+    it("should calculate spread for each market", async () => {
+      const markets = await spreadService.marketProvider.getAllMarkets();
+      const calculateSpreadSpy = jest.spyOn(spreadService, "calculateSpread");
+
+      await spreadService.getAllSpreads();
+
+      markets.forEach((market) => {
+        expect(calculateSpreadSpy).toHaveBeenCalledWith(market);
+      });
     });
   });
 
-  describe("setAlertSpread", () => {
-    it("should set alert spread", () => {
-      spreadService.setAlertSpread({ value: 2, market: "btc-clp" });
-      const alertSpread = spreadService.pollAlertSpread();
-      expect(alertSpread).not.toBeNull();
-    });
-  });
-
-  describe("pollAlertSpread", () => {
-    it("should poll alert spread", async () => {
+  describe("setAlertSpread and pollAlertSpread", () => {
+    it("should set and poll alert spread", async () => {
       spreadService.setAlertSpread({ value: 1, market: "btc-clp" });
+
       const alertSpread = await spreadService.pollAlertSpread();
+      expect(alertSpread).not.toBeNull();
       expect(alertSpread?.isGreaterThanAlertSpread).toBe(true);
 
       spreadService.setAlertSpread({ value: 3, market: "btc-clp" });
+
       const alertSpread2 = await spreadService.pollAlertSpread();
       expect(alertSpread2?.isGreaterThanAlertSpread).toBe(false);
+    });
+
+    it("should handle no alert spread", async () => {
+      const alertSpread = await spreadService.pollAlertSpread();
+      expect(alertSpread).toBeNull();
     });
   });
 });

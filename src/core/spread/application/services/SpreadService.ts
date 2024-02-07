@@ -7,8 +7,8 @@ import { PollingSpread } from "../../domain/models/PollingSpread";
 
 class SpreadService implements SpreadServiceInterface {
   constructor(
-    private readonly marketProvider: MarketProviderInterface,
-    private readonly alertSpreadRepository: AlertSpreadRepositoryInterface
+    public readonly marketProvider: MarketProviderInterface,
+    public readonly alertSpreadRepository: AlertSpreadRepositoryInterface
   ) {}
 
   async calculateSpread(market: Market): Promise<Spread> {

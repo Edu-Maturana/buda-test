@@ -4,21 +4,31 @@ import { MarketOrderBookResponse } from "../../../core/spread/external/MarketPro
 
 export class MockMarketProvider implements MarketProviderInterface {
   async getMarketOrders(market: Market): Promise<MarketOrderBookResponse> {
-    return {
-      order_book: {
-        bids: [
-          ["100", "10"],
-          ["99", "20"],
-        ],
-        asks: [
-          ["102", "15"],
-          ["103", "25"],
-        ],
+    const marketOrdersMap: Record<string, MarketOrderBookResponse> = {
+      "btc-clp": {
+        order_book: {
+          asks: [["102", "10"]],
+          bids: [["100", "8"]],
+        },
+      },
+      "eth-clp": {
+        order_book: {
+          asks: [["100", "10"]],
+          bids: [["100", "10"]],
+        },
+      },
+      "btc-ars": {
+        order_book: {
+          asks: [],
+          bids: [],
+        },
       },
     };
+
+    return marketOrdersMap[market];
   }
 
   async getAllMarkets(): Promise<Market[]> {
-    return ["btc-clp", "eth-clp"];
+    return ["btc-clp", "eth-clp", "btc-ars"];
   }
 }
