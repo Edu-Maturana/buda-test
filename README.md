@@ -2,13 +2,26 @@
 
 Este es mi test para aplicar a Buda.com
 
-### 🧪 Dónde probar?
-
-Puedes hacer peticiones hacia esta API levantada en GCP Cloud Run con 🐳 Docker.
+### Instalar y correr el proyecto
 
 ```
-https://buda-test-cpo4kxu4qa-uc.a.run.app
+git clone https://github.com/Edu-Maturana/buda-test.git
 
-Ejemplo: https://buda-test-cpo4kxu4qa-uc.a.run.app/api/v1/spread/btc-clp
+cd buda-test
+
+npm install
+
+npm start
+```
+
+### Correr con 🐳 Docker
 
 ```
+docker build -t buda-test .
+
+docker run -p 3000:3000 buda-test
+```
+
+### Documentación
+
+- [API Docs](https://documenter.getpostman.com/view/13824230/2s9Yyy9K1i)
