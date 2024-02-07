@@ -1,6 +1,6 @@
 import express from "express";
 import bodyParser from "body-parser";
-import SpreadModule from "./spread/SpreadModule";
+import SpreadModule from "./core/spread/SpreadModule";
 
 const app = express();
 const spreadModule = new SpreadModule();
