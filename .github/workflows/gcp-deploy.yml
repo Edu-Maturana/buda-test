@@ -32,4 +32,4 @@ jobs:
         run: docker push $IMAGE_NAME
 
       - name: Deploy Docker image
-        run: gcloud run deploy ${{ env.APP_NAME }} --image $IMAGE_NAME --region southamerica-east1 --platform managed --allow-unauthenticated --quiet
+        run: gcloud run deploy ${{ env.APP_NAME }} --image $IMAGE_NAME --region southamerica-west1 --platform managed --allow-unauthenticated --quiet
