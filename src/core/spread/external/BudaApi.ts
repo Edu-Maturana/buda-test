@@ -7,7 +7,7 @@ import {
 import { Market } from "../domain/value-objects/SpreadValueObjects";
 
 class BudaApi implements MarketProviderInterface {
-  apiURL: string = "https://www.buda.com/api/v2";
+  apiURL: string = "http://www.buda.com/api/v2";
   marketCache: Market[] = [];
 
   async getMarketOrders(market: Market): Promise<MarketOrderBookResponse> {
