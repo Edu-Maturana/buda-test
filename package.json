@@ -4,10 +4,9 @@
   "description": "Buda test by @EduMaturana",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon --exec ts-node src/main.ts",
     "build": "tsc",
-    "test:watch": "jest --watch"
+    "test:unit": "jest"
   },
   "repository": {
     "type": "git",
