@@ -11,6 +11,7 @@ class BudaApi implements MarketProviderInterface {
   marketCache: Market[] = [];
 
   async getMarketOrders(market: Market): Promise<MarketOrderBookResponse> {
+    market = market.toLowerCase();
     const response = await axios.get(
       `${this.apiURL}/markets/${market}/order_book`
     );
