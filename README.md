@@ -25,7 +25,7 @@ docker run -p 3000:3000 buda-test
 ### 🧪 Correr tests unitarios
 
 ```
-npm test:unit
+npm run test:unit
 ```
 
 ### 📖 Documentación

@@ -6,6 +6,6 @@ export class Spread {
 
   constructor(value: SpreadValue, market: Market) {
     this.value = value;
-    this.market = market;
+    this.market = market.toLowerCase();
   }
 }
