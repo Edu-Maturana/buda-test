@@ -8,31 +8,48 @@ class SpreadController implements SpreadControllerInterface {
   constructor(private readonly spreadService: SpreadService) {}
 
   async getSpread(req: Request, res: Response): Promise<void> {
-    const market = req.params.market as Market;
-    const spread = await this.spreadService.calculateSpread(market);
-    res.json(spread);
+    try {
+      const market = req.params.market as Market;
+      const spread = await this.spreadService.calculateSpread(market);
+      res.json(spread);
+    } catch (error: any) {
+      res.status(404).json({ message: "Market not found" });
+    }
   }
 
   async getAllSpreads(req: Request, res: Response): Promise<void> {
-    const spreads = await this.spreadService.getAllSpreads();
-    res.json(spreads);
+    try {
+      const spreads = await this.spreadService.getAllSpreads();
+      res.json(spreads);
+    } catch (error: any) {
+      res.status(500).json({ message: error.message });
+    }
   }
 
   async setAlertSpread(req: Request, res: Response): Promise<void> {
-    const spread = new Spread(req.body.value, req.body.market);
-    this.spreadService.setAlertSpread(spread);
-    res.json({ message: "Alert spread set" });
+    try {
+      const { market, value } = req.body;
+      const spread = new Spread(value, market);
+      this.spreadService.setAlertSpread(spread);
+      res.json({ message: "Alert spread set" });
+    } catch (error: any) {
+      res.status(500).json({ message: error.message });
+    }
   }
 
   async pollAlertSpread(req: Request, res: Response): Promise<void> {
-    const alertSpread = await this.spreadService.pollAlertSpread();
+    try {
+      const alertSpread = await this.spreadService.pollAlertSpread();
 
-    if (!alertSpread) {
-      res.status(404).json({ message: "No alert spread set" });
-      return;
+      if (!alertSpread) {
+        res.status(404).json({ message: "No alert spread set" });
+        return;
+      }
+
+      res.json(alertSpread);
+    } catch (error: any) {
+      res.status(500).json({ message: error.message });
     }
-
-    res.json(alertSpread);
   }
 }
 
