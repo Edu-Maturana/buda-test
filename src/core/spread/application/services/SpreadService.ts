@@ -39,8 +39,8 @@ class SpreadService implements SpreadServiceInterface {
     this.alertSpreadRepository.setAlertSpread(alertSpread);
   }
 
-  async pollAlertSpread(): Promise<PollingSpread | null> {
-    const alertSpread = this.alertSpreadRepository.getAlertSpread();
+  async pollAlertSpread(id: number): Promise<PollingSpread | null> {
+    const alertSpread = this.alertSpreadRepository.getAlertSpread(id);
 
     if (!alertSpread) {
       return null;

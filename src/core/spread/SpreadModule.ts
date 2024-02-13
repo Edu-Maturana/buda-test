@@ -33,7 +33,7 @@ class SpreadModule {
       this.spreadController.setAlertSpread.bind(this.spreadController)
     );
     router.get(
-      "/alert/poll",
+      "/alert/poll/:id",
       this.spreadController.pollAlertSpread.bind(this.spreadController)
     );
 

@@ -2,14 +2,16 @@ import { Spread } from "../../domain/models/Spread";
 import AlertSpreadRepositoryInterface from "./AlertSpreadRepositoryInterface";
 
 class AlertSpreadRepository implements AlertSpreadRepositoryInterface {
-  private alertSpread: Spread | null = null;
+  private alertSpreads: Spread[] = [];
+  private autoIncId: number = 0;
 
   setAlertSpread(spread: Spread): void {
-    this.alertSpread = spread;
+    spread.id = this.autoIncId++;
+    this.alertSpreads.push(spread);
   }
 
-  getAlertSpread(): Spread | null {
-    return this.alertSpread;
+  getAlertSpread(id: number): Spread | null {
+    return this.alertSpreads.find((spread) => spread.id === id) || null;
   }
 }
 

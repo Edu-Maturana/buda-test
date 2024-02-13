@@ -5,7 +5,7 @@ interface SpreadServiceInterface {
   calculateSpread(market: string): Promise<Spread>;
   getAllSpreads(): Promise<Spread[]>;
   setAlertSpread(alertSpread: Spread): void;
-  pollAlertSpread(): Promise<PollingSpread | null>;
+  pollAlertSpread(id: number): Promise<PollingSpread | null>;
 }
 
 export default SpreadServiceInterface;

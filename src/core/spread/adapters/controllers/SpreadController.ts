@@ -39,7 +39,8 @@ class SpreadController implements SpreadControllerInterface {
 
   async pollAlertSpread(req: Request, res: Response): Promise<void> {
     try {
-      const alertSpread = await this.spreadService.pollAlertSpread();
+      const alertId = parseInt(req.params.id);
+      const alertSpread = await this.spreadService.pollAlertSpread(alertId);
 
       if (!alertSpread) {
         res.status(404).json({ message: "No alert spread set" });
