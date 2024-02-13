@@ -7,20 +7,27 @@ import LogsApi from "./external/logs/LogsApi";
 import { LogsApiInterface } from "./external/logs/LogsApiInterface";
 
 class SpreadModule {
-  private readonly router: Router;
-  private readonly spreadController: SpreadController;
-  private readonly logsApi: LogsApiInterface;
-  private readonly alertSpreadRepository: AlertSpreadRepository;
+  private router: Router;
+  private spreadService!: SpreadService;
+  private alertSpreadRepository!: AlertSpreadRepository;
+  private spreadController!: SpreadController;
+  private logsApi!: LogsApiInterface;
+  private budaApi!: BudaApi;
 
   constructor() {
+    this.setupDependencies();
+    this.router = this.setupRouter();
+  }
+
+  private setupDependencies(): void {
     this.logsApi = new LogsApi();
     this.alertSpreadRepository = new AlertSpreadRepository(this.logsApi);
-    const spreadService = new SpreadService(
-      new BudaApi(),
+    this.budaApi = new BudaApi();
+    this.spreadService = new SpreadService(
+      this.budaApi,
       this.alertSpreadRepository
     );
-    this.spreadController = new SpreadController(spreadService);
-    this.router = this.setupRouter();
+    this.spreadController = new SpreadController(this.spreadService);
   }
 
   private setupRouter(): Router {
