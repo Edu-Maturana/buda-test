@@ -1,17 +1,23 @@
 import express, { Router } from "express";
 import SpreadController from "./adapters/controllers/SpreadController";
 import SpreadService from "./application/services/SpreadService";
-import BudaApi from "./external/BudaApi";
+import BudaApi from "./external/market-provider/BudaApi";
 import AlertSpreadRepository from "./adapters/repositories/AlertSpreadRepository";
+import LogsApi from "./external/logs/LogsApi";
+import { LogsApiInterface } from "./external/logs/LogsApiInterface";
 
 class SpreadModule {
   private readonly router: Router;
   private readonly spreadController: SpreadController;
+  private readonly logsApi: LogsApiInterface;
+  private readonly alertSpreadRepository: AlertSpreadRepository;
 
   constructor() {
+    this.logsApi = new LogsApi();
+    this.alertSpreadRepository = new AlertSpreadRepository(this.logsApi);
     const spreadService = new SpreadService(
       new BudaApi(),
-      new AlertSpreadRepository()
+      this.alertSpreadRepository
     );
     this.spreadController = new SpreadController(spreadService);
     this.router = this.setupRouter();

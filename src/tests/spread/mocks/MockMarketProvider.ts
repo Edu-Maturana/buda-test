@@ -1,6 +1,6 @@
 import { Market } from "../../../core/spread/domain/value-objects/SpreadValueObjects";
-import { MarketProviderInterface } from "../../../core/spread/external/MarketProviderInterface";
-import { MarketOrderBookResponse } from "../../../core/spread/external/MarketProviderInterface";
+import { MarketProviderInterface } from "../../../core/spread/external/market-provider/MarketProviderInterface";
+import { MarketOrderBookResponse } from "../../../core/spread/external/market-provider/MarketProviderInterface";
 
 export class MockMarketProvider implements MarketProviderInterface {
   async getMarketOrders(market: Market): Promise<MarketOrderBookResponse> {

@@ -1,4 +1,4 @@
-import { MarketProviderInterface } from "../../external/MarketProviderInterface";
+import { MarketProviderInterface } from "../../external/market-provider/MarketProviderInterface";
 import { Market } from "../../domain/value-objects/SpreadValueObjects";
 import { Spread } from "../../domain/models/Spread";
 import SpreadServiceInterface from "./SpreadServiceInterface";

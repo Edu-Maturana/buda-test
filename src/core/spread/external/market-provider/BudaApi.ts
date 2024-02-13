@@ -4,7 +4,7 @@ import {
   MarketOrderBookResponse,
   MarketResponse,
 } from "./MarketProviderInterface";
-import { Market } from "../domain/value-objects/SpreadValueObjects";
+import { Market } from "../../domain/value-objects/SpreadValueObjects";
 
 class BudaApi implements MarketProviderInterface {
   apiURL: string = "https://www.buda.com/api/v2";
