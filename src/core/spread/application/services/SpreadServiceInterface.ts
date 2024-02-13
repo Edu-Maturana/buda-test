@@ -6,6 +6,7 @@ interface SpreadServiceInterface {
   getAllSpreads(): Promise<Spread[]>;
   setAlertSpread(alertSpread: Spread): void;
   pollAlertSpread(id: number): Promise<PollingSpread | null>;
+  getAlertSpreads(): Spread[];
 }
 
 export default SpreadServiceInterface;

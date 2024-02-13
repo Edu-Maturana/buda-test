@@ -13,6 +13,10 @@ class AlertSpreadRepository implements AlertSpreadRepositoryInterface {
   getAlertSpread(id: number): Spread | null {
     return this.alertSpreads.find((spread) => spread.id === id) || null;
   }
+
+  getAlertSpreads(): Spread[] {
+    return this.alertSpreads;
+  }
 }
 
 export default AlertSpreadRepository;

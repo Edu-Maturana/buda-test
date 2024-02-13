@@ -5,6 +5,7 @@ interface SpreadControllerInterface {
   getAllSpreads(req: Request, res: Response): Promise<void>;
   setAlertSpread(req: Request, res: Response): Promise<void>;
   pollAlertSpread(req: Request, res: Response): Promise<void>;
+  getAlertSpreads(req: Request, res: Response): Promise<void>;
 }
 
 export default SpreadControllerInterface;

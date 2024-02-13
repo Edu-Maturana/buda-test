@@ -52,6 +52,15 @@ class SpreadController implements SpreadControllerInterface {
       res.status(500).json({ message: error.message });
     }
   }
+
+  async getAlertSpreads(req: Request, res: Response): Promise<void> {
+    try {
+      const alertSpreads = this.spreadService.getAlertSpreads();
+      res.json(alertSpreads);
+    } catch (error: any) {
+      res.status(500).json({ message: error.message });
+    }
+  }
 }
 
 export default SpreadController;

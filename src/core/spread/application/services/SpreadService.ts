@@ -55,6 +55,10 @@ class SpreadService implements SpreadServiceInterface {
       currentSpreadIsGreater
     );
   }
+
+  getAlertSpreads(): Spread[] {
+    return this.alertSpreadRepository.getAlertSpreads();
+  }
 }
 
 export default SpreadService;

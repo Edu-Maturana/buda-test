@@ -21,6 +21,10 @@ class SpreadModule {
     const router = express.Router();
 
     router.get(
+      "/alerts",
+      this.spreadController.getAlertSpreads.bind(this.spreadController)
+    );
+    router.get(
       "/:market",
       this.spreadController.getSpread.bind(this.spreadController)
     );
